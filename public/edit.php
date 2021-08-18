@@ -1,3 +1,20 @@
+
+<?php
+    include 'config.php';
+    // if ($conn->connect_error) {
+    //     die("Connection failed: " . $conn->connect_error);
+    // }
+    $sql = "SELECT * FROM register WHERE id = '".$_GET["id"]."'";
+    // if ($conn->query($sql) === TRUE) {
+    //     echo "<script>alert('done...'); </script>";
+    // } else {
+    //     echo "Error updating record: " . $conn->error;
+    // }
+    // $conn->close();
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -172,43 +189,16 @@
 									<!-- Form Group -->
 									<div class="form-group mb-40">
 										<label for="ImportantPerson" class="mb-2 black bold">Important Person</label>
-										<input type="text" name="fullname" class="theme-input-style" id="" placeholder="Enter name...">
+										<input type="text" name="fullname" class="theme-input-style" id="" value="<?php echo $row['fullname'];?>" placeholder="Enter name...">
 									</div>
 									<!-- End Form Group -->
-									<div class="row mb-40" style="text-align: center;">
-										<div class="col-md-3"></div>
-										<div class="col-md-3">
-											<div class="form-group mb-4">
-												<label for="exampleSelect1" class="mb-2 black bold d-block">Google contact</label>
-												<div class="custom-select style--two">
-													<select class="theme-input-style" id="year" name="year">
-													</select>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-3">
-											<div class="form-group mb-4">
-												<label for="exampleSelect1" class="mb-2 black bold d-block">Facebook contact</label>
-												<div class="custom-select style--two">
-													<select class="theme-input-style" id="exampleSelect1">
-														<option value="01">01</option>
-														<option value="02">02</option>
-														<option value="03">03</option>
-														<option value="04">04</option>
-														<option value="05">05</option>
-													</select>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-3"></div>
-									</div>
 									<h5 class="font-20 mb-40">Add and change remainders</h5>
 									<div class="row">
 										<div class="col-md-6">
 											<!-- Form Group -->
 											<div class="form-group mb-4">
 												<label for="" class="mb-2 black bold">Remainder date</label>
-												<input type="date" name="reminderdate" class="theme-input-style" id="" placeholder=""> </div>
+												<input type="date" name="reminderdate" class="theme-input-style" id="" value="<?php echo $row['reminder_date'];?>" placeholder=""> </div>
 											<div class="form-group mb-4">
 												<label for="" class="mb-2 black bold">Remind me</label>
 												<select name="remindme" class="theme-input-style" id="exampleSelect1">
@@ -221,43 +211,17 @@
 											</div>
 											<div class="form-group mb-4">
 												<label for="" class="mb-2 black bold">What's the occasion?</label>
-												<input type="text" name="occasion" class="theme-input-style" id="" placeholder=""> </div>
+												<input type="text" name="occasion" class="theme-input-style" id="" value="<?php echo $row['occasion'];?>" placeholder=""> </div>
 											<div class="form-group mb-4">
 												<label for="" class="mb-2 black bold">Repeat?</label>
-												<input type="date"  name="repeatdate" class="theme-input-style" id="" placeholder=""> </div>
+												<input type="date"  name="repeatdate" class="theme-input-style" id="" value="<?php echo $row['repeat_date'];?>" placeholder=""> </div>
 											<div class="form-group mb-4">
 												<!-- <label for="" class="mb-2 black bold">Remainder date</label> -->
-												<input type="time" name="repeattime" class="theme-input-style" id="" placeholder=""> </div>
+												<input type="time" name="repeattime" class="theme-input-style" id="" value="<?php echo $row['repeat_time'];?>" placeholder=""> </div>
 											<!-- End Form Group -->
 										</div>
 										<div class="col-md-6">
-											<div class="todays-evnet">
-												<div class="bg-c2-light profile-widget-header">
-													<h4 class="d-flex align-items-center">
-														<img src="public/assets/img/svg/calender-color.svg" alt="" class="svg mr-3">
-														Current remainders
-													</h4> </div>
-												
-													<?php
-                        require 'public/config.php';
-                        $sql=  "SELECT * FROM register";
-                        $result = mysqli_query($conn,$sql);
-                        ?>
-												<div class="card">
-													<ul class="list-unstyled">
-													<?php
-                                    while( $row = mysqli_fetch_array( $result ) ) {
-                                        echo'<tr>';
-										echo'<td><li class="border-bottom">
-										<h5>'.$row["occasion"].'</h5>
-										<div class="event-meta font-14 d-flex align-items-center"> <img src="public/assets/img/svg/watch2.svg" alt="" class="svg"> <span class="time d-inline-block ml-2">'.$row["repeat_time"].'</span> <span class="date d-inline-block ml-2">'.$row['reminder_date'].'</span> </div>
-										<a href="public/edit.php?id='.$row["id"].'"><b>Edit</b></a> </li></td>';
-                                        echo'</tr>';   
-                                    }
-                                    ?>
-													</ul>
-												</div>
-											</div>
+											
 										</div>
 										<div class="button-group pt-1">
 											<button type="submit" value="Publish Post" name="publish" class="btn long">Submit</button>
@@ -291,101 +255,6 @@
 	<script src="public/assets/plugins/apex/apexcharts.min.js"></script>
 	<script src="public/assets/plugins/apex/custom-apexcharts.js"></script>
 	<!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
-	<script type="text/javascript">
-        // Developed By: Binit Mishra.
-            var clientId = '251428165980-oicqgg4nmfdbk725haqffie5r1g50fig.apps.googleusercontent.com';
-            var apiKey = 'AIzaSyAleBqPMC6yV4vbQHfdtm2TuDEss6SE-o4';
-            var scopes = 'https://www.googleapis.com/auth/contacts.readonly';
-
-            var alldata = [];
-
-            $(document).on("click", ".getGmailContact", function () {
-                gapi.client.setApiKey(apiKey);
-                window.setTimeout(authorize);
-            });
-
-            function authorize() {
-                gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuthorization);
-            }
-
-            console.log("Print this first line...");
-
-            function handleAuthorization(authorizationResult) {
-                if (authorizationResult && !authorizationResult.error) {
-                    $.get("https://www.google.com/m8/feeds/contacts/default/thin?alt=json&access_token=" + authorizationResult.access_token + "&max-results=500&v=3.0",
-                            function (response) {
-                                //process the response here
-                                console.log(response);
-                                console.log("Print this second line...");
-                                var entries = response.feed.entry;
-                                var contacts = [];
-                                for (var i = 0; i < entries.length; i++) {
-                                    var contactEntry = entries[i];
-                                    var contact = [];
-
-                                    //console.log(contactEntry);
-                                    // Get Full Name.
-                                    if (typeof (contactEntry.gd$name) != "undefined") {
-                                        if (typeof (contactEntry.gd$name.gd$fullName) != "undefined") {
-                                            if (typeof (contactEntry.gd$name.gd$fullName.$t) != "undefined") {
-                                                contact['name'] = contactEntry.gd$name.gd$fullName.$t;
-                                            }
-                                        }
-                                    }
-
-                                    // Get Phone Number
-                                    if (typeof (contactEntry['gd$phoneNumber']) != "undefined") {
-                                        var phoneNumber = contactEntry['gd$phoneNumber'];
-                                        for (var j = 0; j < phoneNumber.length; j++) {
-                                            if (typeof (phoneNumber[j]['$t']) != "undefined") {
-                                                var phone = phoneNumber[j]['$t'];
-                                                contact['phone'] = phone;
-                                            }
-                                        }
-                                    }
-
-                                    // get Email Address
-                                    if (typeof (contactEntry['gd$email']) != "undefined") {
-                                        var emailAddresses = contactEntry['gd$email'];
-                                        for (var j = 0; j < emailAddresses.length; j++) {
-                                            if (typeof (emailAddresses[j]['address']) != "undefined") {
-                                                var emailAddress = emailAddresses[j]['address'];
-                                                contact['email'] = emailAddress;
-                                            }
-                                        }
-                                    }
-                                    contacts.push(contact);
-
-
-                                }
-                                // To Print All contacts
-                                console.log(contacts);
-                                alldata = contacts;
-                                
-
-                                // You can fetch other information as per your requirement uncomment the given line and read the data.
-                                //console.log(entries);
-                            });
-
-                }
-            }
-    </script>
-    <script src="https://apis.google.com/js/client.js"></script>
-	<script>
-			var select = document.getElementById("year");
-			// for(var i = 2011; i >= 1900; --i) {
-			// 	var option = document.createElement('option');
-			// 	option.text = option.value = i;
-			// 	select.add(option, 0);
-			// }
-			for(var i = 0; i < alldata.length; i++) {
-    var opt = alldata[i];
-    var el = document.createElement("option");
-    el.textContent = opt;
-    el.value = opt;
-    select.appendChild(el);
-}​
-	</script>
 </body>
 
 </html>

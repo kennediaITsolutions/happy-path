@@ -1,5 +1,7 @@
+
+
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
 
 <head>
    <!-- Page Title -->
@@ -48,7 +50,7 @@
          <!-- Logo -->
          <div class="logo">
             <a href="index.html" class="default-logo"><img class="shadowlogo" src="public/assets/img/logo.png" alt=""></a>
-            <a href="index.html" class="mobile-logo"><img src="public/assets/img/mobile-logo.png" alt=""></a>
+            <a href="index.html" class="mobile-logo"><img src="public/assets/img/logo.png" alt=""></a>
          </div>
          <!-- End Logo -->
 
@@ -118,7 +120,7 @@
                            <li class="d-none d-lg-flex">
                               <!-- Main Header Button -->
                               <div class="main-header-btn ml-md-1">
-                                 <a href="<?php echo base_url();?>login" class="btn">Log out</a>
+                                 <a href="" class="btn">Log out</a>
                               </div>
                               <!-- End Main Header Button -->
                            </li>
@@ -235,34 +237,42 @@
                             <h2 class="font-50 mb-4">Your Important People</h2>
                             <div class="table-responsive">
                                     <!-- Invoice List Table -->
+                         <?php
+                        require 'public/config.php';
+                        $sql=  "SELECT * FROM register";
+                        $result = mysqli_query($conn,$sql);
+                        ?>
                                     <table class="text-nowrap table-bordered dh-table">
                                         <thead>
                                             <tr>
                                                 <th>SI No.</th>
                                                 <th>Name</th>
                                                 <th>Next remainder date</th>
+                                                <th>Remind Me</th>
                                                 <th>Remainder reason</th>
+                                                <th>Repeat Date</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Shelly</td>
-                                                <td>26 November 2019</td>
-                                                <td>Birthday</td>
-                                                <td><a href="" class="details-btn">View Details <i class="icofont-arrow-right"></i></a></td>
-                                            </tr>
-                                            <tr>
-                                            <td>2</td>
-                                                <td>Wanda</td>
-                                                <td>26 November 2019</td>
-                                                <td>Wedding Anniversary</td>
-                                                <td><a href="" class="details-btn">View Details <i class="icofont-arrow-right"></i></a></td>
-                                            </tr>
-                                            
+                                            <?php
+                                    $counter=1;
+                                    while( $row = mysqli_fetch_array( $result ) ) {
+                                        echo'<tr>';
+                                        echo'<td><span class="">'. $counter .'</span></td>';
+                                        echo'<td><h4 class="">'.$row['fullname'].'</span></td>';
+                                        echo'<td><h4 class="">'.$row['reminder_date'].'</span></td>';
+                                        echo'<td><span class="">'.$row["remind_me"].'</span></td>';
+                                        echo'<td><span class="">'.$row["occasion"].'</span></td>';
+                                        echo'<td><span class="">'.$row["repeat_date"].'</span></td>';
+                                        echo'<td><a href="" class="details-btn">View Details <i class="icofont-arrow-right"></i></a></td>';
+                                        echo'</tr>';  
+                                        $counter++;    
+                                    }
+                                    ?>
                                         </tbody>
                                     </table>
+                                    <?php mysqli_close($conn); ?>
                                     <!-- End Invoice List Table -->
                                 </div>
                            
