@@ -29,7 +29,7 @@
    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
 
    <!-- ======= MAIN STYLES ======= -->
-   <link rel="stylesheet" href="public/assets/css/style.css">
+   <link rel="stylesheet" href="<?php echo site_url('public/assets/css/style.css');?>">
    <!-- ======= END MAIN STYLES ======= -->
 
 </head>

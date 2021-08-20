@@ -6,7 +6,6 @@ class Home extends BaseController
 {
 	public function index()
 	{
-		return view('matchandmanage');
+		return view('welcome_message');
 	}
 }
-
